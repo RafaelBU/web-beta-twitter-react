@@ -8,90 +8,78 @@ import {
 import { Box } from "@mui/system";
 import useLoadFollowers from "../../hooks/useLoadFollowers";
 import Container from "../Container";
+import AutoSizer from "react-virtualized-auto-sizer";
+import { FixedSizeList as List } from "react-window";
 
 export default function FollowersSection() {
-  const { isLoading, followers } = useLoadFollowers();
+  const { isLoading, followers, notFollowers } = useLoadFollowers();
+
+  const followerRow = ({ index, style }) => {
+    return (
+      <Box style={style}>
+        <Container>
+          <Grid container alignItems="center">
+            <Checkbox />
+            <Typography>{followers[index].name}</Typography>
+            <Box ml="auto">
+              <Button size="small" variant="outlined" color="error">
+                Unfollow
+              </Button>
+            </Box>
+          </Grid>
+        </Container>
+      </Box>
+    );
+  };
+
+  const notFollowerRow = ({ index, style }) => {
+    return (
+      <Box style={style}>
+        <Container>
+          <Grid container alignItems="center">
+            <Typography>{notFollowers[index].name}</Typography>
+            <Box ml="auto">
+              <Button size="small" variant="outlined" color="success">
+                Follow
+              </Button>
+            </Box>
+          </Grid>
+        </Container>
+      </Box>
+    );
+  };
 
   return (
     <>
-      <Box mb={2} sx={{ width: "100%" }}>
-        <Container>
-          <Typography>Following</Typography>
-          {isLoading ? (
-            <CircularProgress />
-          ) : (
-            followers.map(({ id, name }) => (
-              <Box mb={2} key={id}>
-                <Container>
-                  <Grid container alignItems="center">
-                    <Checkbox />
-                    <Typography>{name}</Typography>
-                    <Box ml="auto">
-                      <Button size="small" variant="outlined" color="error">
-                        Unfollow
-                      </Button>
-                    </Box>
-                  </Grid>
-                </Container>
-              </Box>
-            ))
-          )}
-        </Container>
-      </Box>
+      <Container>
+        <Typography>Following</Typography>
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          <AutoSizer>
+            {({ width }) => (
+              <List height={280} width={width} itemSize={50} itemCount={500}>
+                {followerRow}
+              </List>
+            )}
+          </AutoSizer>
+        )}
+      </Container>
 
-      <Box mb={2} sx={{ width: "100%" }}>
-        <Container>
-          <Typography>Follow</Typography>
-          <Box mb={2}>
-            <Container>
-              <Grid container alignItems="center">
-                <Typography>Jaimito</Typography>
-                <Box ml="auto">
-                  <Button size="small" variant="outlined" color="success">
-                    Follow
-                  </Button>
-                </Box>
-              </Grid>
-            </Container>
-          </Box>
-          <Box mb={2}>
-            <Container>
-              <Grid container alignItems="center">
-                <Typography>Pepito</Typography>
-                <Box ml="auto">
-                  <Button size="small" variant="outlined" color="success">
-                    Follow
-                  </Button>
-                </Box>
-              </Grid>
-            </Container>
-          </Box>
-          <Box mb={2}>
-            <Container>
-              <Grid container alignItems="center">
-                <Typography>Pepito</Typography>
-                <Box ml="auto">
-                  <Button size="small" variant="outlined" color="success">
-                    Follow
-                  </Button>
-                </Box>
-              </Grid>
-            </Container>
-          </Box>
-          <Box mb={2}>
-            <Container>
-              <Grid container alignItems="center">
-                <Typography>Pepito</Typography>
-                <Box ml="auto">
-                  <Button size="small" variant="outlined" color="success">
-                    Follow
-                  </Button>
-                </Box>
-              </Grid>
-            </Container>
-          </Box>
-        </Container>
-      </Box>
+      <Container>
+        <Typography>Follow</Typography>
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          <AutoSizer>
+            {({ width }) => (
+              <List height={280} width={width} itemSize={50} itemCount={500}>
+                {notFollowerRow}
+              </List>
+            )}
+          </AutoSizer>
+        )}
+      </Container>
     </>
   );
 }

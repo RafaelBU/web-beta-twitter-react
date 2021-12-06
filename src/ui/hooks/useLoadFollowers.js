@@ -4,13 +4,15 @@ import loadFollowersAction from "../../domain/User/useCases/loadFollowersAction"
 export default function useLoadFollowers() {
   const [isLoading, setIsLoading] = useState(true);
   const [followers, setFollowers] = useState([]);
+  const [notFollowers, setNotFollowers] = useState([]);
 
   useEffect(() => {
     const loadFollowers = async () => {
       try {
         setIsLoading(true);
         const followers = await loadFollowersAction();
-        setFollowers(followers.filter((_item, id) => id < 4));
+        setFollowers(followers.filter((_item, id) => id < 500));
+        setNotFollowers(followers.filter((_item, id) => id >= 500));
       } catch (error) {
         setFollowers([]);
       } finally {
@@ -23,5 +25,6 @@ export default function useLoadFollowers() {
   return {
     isLoading,
     followers,
+    notFollowers,
   };
 }
