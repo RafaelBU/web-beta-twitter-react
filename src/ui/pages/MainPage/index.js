@@ -1,4 +1,5 @@
 import { Grid } from "@mui/material";
+
 import FollowersSection from "../../components/FollowersSection";
 import MessageSection from "../../components/MessageSection";
 import TimelineSection from "../../components/TimelineSection";
