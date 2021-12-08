@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import useStyles from "./styles";
@@ -11,9 +11,12 @@ export default function MessageSection({
   const { container } = useStyles();
   const [newMessage, setNewMessage] = useState("");
 
+  const textInput = useRef(null);
+
   const confirNewMessage = ({ event }) => {
     const value = event.target.value;
-    setNewMessage("");
+    setNewMessage(value);
+    textInput.current.value = "";
     handlePostNewMessage(value);
   };
 
@@ -32,6 +35,7 @@ export default function MessageSection({
           defaultValue={newMessage}
           onBlur={(e) => confirNewMessage({ event: e })}
           onKeyPress={(e) => handleKeyPress({ event: e })}
+          inputRef={textInput}
           label="Post a new message"
           style={{ width: "100%" }}
         />
