@@ -1,50 +1,43 @@
-import { Grid, Typography } from "@mui/material";
+import ProptTypes from "prop-types";
+import { CircularProgress, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import Container from "../Container";
 import useStyles from "./styles";
 
-export default function Timeline() {
+export default function Timeline({ messages, isLoading }) {
   const { timeStyle } = useStyles();
   return (
     <>
       <Typography>Timeline</Typography>
       <Container>
-        <Box mb={3}>
-          <Container>
-            <Grid container>
-              <Typography variant="body2">Alice</Typography>
-              <Typography variant="body2" className={timeStyle}>
-                21min
-              </Typography>
-            </Grid>
-            <Typography>Mensaje de prueba 1</Typography>
-          </Container>
-        </Box>
-
-        <Box mb={3}>
-          <Container>
-            <Grid container>
-              <Typography variant="body2">Jose</Typography>
-              <Typography variant="body2" className={timeStyle}>
-                25min
-              </Typography>
-            </Grid>
-            <Typography>Mensaje de prueba 2</Typography>
-          </Container>
-        </Box>
-
-        <Box mb={3}>
-          <Container>
-            <Grid container>
-              <Typography variant="body2">Pepe</Typography>
-              <Typography variant="body2" className={timeStyle}>
-                30min
-              </Typography>
-            </Grid>
-            <Typography>Mensaje de prueba 3</Typography>
-          </Container>
-        </Box>
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          messages.map(({ id, author, date, content }) => (
+            <Box mb={3} key={id}>
+              <Container>
+                <Grid container>
+                  <Typography variant="body2">{author}</Typography>
+                  <Typography variant="body2" className={timeStyle}>
+                    {date}
+                  </Typography>
+                </Grid>
+                <Typography>{content}</Typography>
+              </Container>
+            </Box>
+          ))
+        )}
       </Container>
     </>
   );
 }
+
+Timeline.propTypes = {
+  isLoading: ProptTypes.bool,
+  messages: ProptTypes.array,
+};
+
+Timeline.defaultProps = {
+  isLoading: true,
+  messages: [],
+};

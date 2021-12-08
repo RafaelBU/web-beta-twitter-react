@@ -11,7 +11,8 @@ export default function useLoadFollowers() {
       try {
         setIsLoading(true);
         const followers = await loadFollowersAction();
-        setFollowers(followers.filter((_item, id) => id < 500));
+        const filterFollowers = followers.filter((_item, id) => id < 500);
+        setFollowers(filterFollowers);
         setNotFollowers(followers.filter((_item, id) => id >= 500));
       } catch (error) {
         setFollowers([]);
