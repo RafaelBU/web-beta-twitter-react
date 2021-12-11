@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import loadMeData from "../../domain/User/useCases/loadMeData";
 
 export default function useLoadMeData() {
-  const [userIsLoaded, setUserIsLoaded] = useState(false);
+  const [userIsLoading, setUserIsLoading] = useState(true);
   const [meData, setMeData] = useState({});
 
   useEffect(() => {
@@ -13,11 +13,11 @@ export default function useLoadMeData() {
       } catch (error) {
         setMeData({});
       } finally {
-        setUserIsLoaded(true);
+        setUserIsLoading(false);
       }
     };
     loadData();
   }, []);
 
-  return { userIsLoaded, meData };
+  return { userIsLoading, meData };
 }

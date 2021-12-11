@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import ProptTypes from "prop-types";
 import { CircularProgress, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
@@ -6,7 +7,14 @@ import Container from "../Container";
 import useStyles from "./styles";
 
 export default function Timeline({ messages, isLoading }) {
-  const { timeStyle } = useStyles();
+  const { timeStyle, contentMessage } = useStyles();
+  const listRef = useRef(null);
+
+  useEffect(() => {
+    if (listRef.current !== null) {
+      listRef.current.scrollToItem(0);
+    }
+  }, [messages]);
 
   const messageRow = ({ index, style }) => {
     const { author, date, content } = messages[index];
@@ -19,7 +27,7 @@ export default function Timeline({ messages, isLoading }) {
               {date}
             </Typography>
           </Grid>
-          <Typography>{content}</Typography>
+          <Typography className={contentMessage}>{content}</Typography>
         </Container>
       </Box>
     );
@@ -34,6 +42,7 @@ export default function Timeline({ messages, isLoading }) {
         ) : (
           <List
             height={480}
+            ref={listRef}
             width="100%"
             itemSize={100}
             itemCount={messages.length}

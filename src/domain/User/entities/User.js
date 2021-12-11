@@ -5,6 +5,10 @@ export default class User {
 
   surname;
 
+  userGender;
+
+  email;
+
   messages;
 
   followers;
@@ -13,12 +17,16 @@ export default class User {
     id = "",
     name = "",
     surname = "",
+    userGender = "",
+    email = "",
     messages = [],
     followers = [],
   }) {
     this.id = id;
     this.name = name;
     this.surname = surname;
+    this.userGender = userGender;
+    this.email = email;
     this.messages = messages;
     this.followers = followers;
   }

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import postNewMessageToTimeline from "../../domain/Message/useCases/postNewMessageToTimeline";
 
 export default function usePostNewMessage({
+  meUser,
   isUpdatingTimeline,
   setIsUpdatingTimeline,
   newMessage,
@@ -17,6 +18,7 @@ export default function usePostNewMessage({
         const response = await postNewMessageToTimeline({
           newMessage,
           currentTimeline,
+          meUser,
         });
         setCurrentTimeline(response);
       } catch (error) {

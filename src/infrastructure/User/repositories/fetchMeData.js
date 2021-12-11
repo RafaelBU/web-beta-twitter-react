@@ -9,6 +9,8 @@ const fetchMeData = async () => {
         id: 0,
         name: "Rafael",
         surname: "Buzón Urbano",
+        email: "rafael.buzon@mail.com",
+        userGender: "Male",
         messages: [],
         followers: [],
       })

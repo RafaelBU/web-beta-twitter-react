@@ -1,5 +1,6 @@
 const adaptPostNewMessage = ({ message, isNewMessage = false }) => {
   const { id, authorEmail, author, date, content } = message;
+
   return {
     id: isNewMessage ? null : id,
     userEmail: isNewMessage ? "rafael.buzon@email.com" : authorEmail,
