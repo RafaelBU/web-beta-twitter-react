@@ -11,7 +11,7 @@ export default function useLoadMessages() {
         const messages = await loadTimelineMessages();
         setMessages(messages);
       } catch (error) {
-        setMessages([]);
+        console.error(error);
       } finally {
         setIsLoadingMessages(false);
       }

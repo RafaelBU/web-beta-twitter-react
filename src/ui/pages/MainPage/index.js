@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
 import FollowersSection from "../../components/FollowersSection";
@@ -10,30 +9,17 @@ import usePostNewMessage from "../../hooks/usePostNewMessage";
 import useLoadFollowers from "../../hooks/useLoadFollowers";
 import useAddFollower from "../../hooks/useAddFollower";
 import useRemoveFollower from "../../hooks/useRemoveFollower";
-// import useLoadMeData from "../../hooks/useLoadMeData";
 
 export default function MainPage() {
   const { container, content, followersBlock, mainBlock } = useStyles();
 
-  // const { userIsLoading, meData } = useLoadMeData();
-
-  const {
-    meUser,
-    isLoadingUsers,
-    // followers,
-    notFollowers,
-    // setFollowers,
-    setNotFollowers,
-  } = useLoadFollowers();
-
-  console.log("meUser es ", meUser);
-
-  // console.log("los notFollowers son ", notFollowers);
+  const { meUser, isLoadingUsers, notFollowers, setNotFollowers } =
+    useLoadFollowers();
 
   const { isLoadingMessages, messages } = useLoadMessages();
 
   const [currentTimeline, setCurrentTimeline] = useState([]);
-  const [fullTimeline, setFullTimeLine] = useState([]);
+  const [fullTimeline, setFullTimeline] = useState([]);
   const [isUpdatingTimeline, setIsUpdatingTimeline] = useState(false);
   const [newMessage, setNewMessage] = useState("");
   const [emailsToFilter, setEmailsToFilter] = useState([]);
@@ -47,11 +33,10 @@ export default function MainPage() {
     meUser,
     isAddingFollower,
     setIsAddingFollower,
-    // followers,
     newFollower,
-    // setFollowers,
     setNotFollowers,
     setCurrentTimeline,
+    setFullTimeline,
   });
 
   useRemoveFollower({
@@ -61,6 +46,7 @@ export default function MainPage() {
     oldFollower,
     setNotFollowers,
     setCurrentTimeline,
+    setFullTimeline,
   });
 
   const { isPostingNewMessage } = usePostNewMessage({
@@ -70,11 +56,12 @@ export default function MainPage() {
     newMessage,
     currentTimeline,
     setCurrentTimeline,
+    setFullTimeline,
   });
 
   useEffect(() => {
     setCurrentTimeline(messages);
-    setFullTimeLine(messages);
+    setFullTimeline(messages);
   }, [messages]);
 
   const getFilteredTimeline = ({ isChecked, email }) => {

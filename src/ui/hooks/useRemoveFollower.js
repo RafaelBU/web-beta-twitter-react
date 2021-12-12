@@ -8,6 +8,7 @@ export default function useRemoveFollower({
   oldFollower,
   setNotFollowers,
   setCurrentTimeline,
+  setFullTimeline,
 }) {
   useEffect(() => {
     const removeFollower = async ({ oldFollower }) => {
@@ -24,11 +25,11 @@ export default function useRemoveFollower({
         setCurrentTimeline((prev) =>
           prev.filter(({ authorEmail }) => authorEmail !== oldFollower.email)
         );
-        // setFollowers(response);
+        setFullTimeline((prev) =>
+          prev.filter(({ authorEmail }) => authorEmail !== oldFollower.email)
+        );
       } catch (error) {
-        console.log("el error es ", error);
-        // setFollowers(followers);
-        // setNotFollowers([]);
+        console.error(error);
       } finally {
         setIsRemovingFollower(false);
       }

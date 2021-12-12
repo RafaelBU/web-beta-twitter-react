@@ -5,12 +5,19 @@ export default function useAddFollower({
   meUser,
   isAddingFollower,
   setIsAddingFollower,
-  // followers,
   newFollower,
-  // setFollowers,
   setNotFollowers,
   setCurrentTimeline,
+  setFullTimeline,
 }) {
+  const updateTimeline = (timeline) => {
+    newFollower.messages.forEach((message) => timeline.push(message));
+    const sortedMessages = timeline.sort(
+      (a, b) => new Date(b.date) - new Date(a.date)
+    );
+    return sortedMessages;
+  };
+
   useEffect(() => {
     const addFollower = async ({ newFollower, currentFollowers }) => {
       try {
@@ -25,14 +32,14 @@ export default function useAddFollower({
 
         setCurrentTimeline((prev) => {
           const auxState = [...prev];
-          newFollower.messages.forEach((message) => auxState.push(message));
-          return auxState;
+          return updateTimeline(auxState);
         });
-        // setFollowers(response);
+        setFullTimeline((prev) => {
+          const auxState = [...prev];
+          return updateTimeline(auxState);
+        });
       } catch (error) {
-        console.log("el error es ", error);
-        // setFollowers(followers);
-        setNotFollowers([]);
+        console.error(error);
       } finally {
         setIsAddingFollower(false);
       }

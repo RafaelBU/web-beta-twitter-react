@@ -2,7 +2,7 @@ import fetchTimelineMessages from "../../../infrastructure/Message/repositories/
 
 const loadTimelineMessages = async () => {
   const messages = await fetchTimelineMessages();
-  return messages;
+  return messages.filter((_item, index) => index <= 4);
 };
 
 export default loadTimelineMessages;

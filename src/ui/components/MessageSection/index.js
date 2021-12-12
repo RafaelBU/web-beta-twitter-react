@@ -8,7 +8,7 @@ export default function MessageSection({
   isPostingNewMessage,
   handlePostNewMessage,
 }) {
-  const { container } = useStyles();
+  const { container, inputStyle, buttonStyle } = useStyles();
   const [newMessage, setNewMessage] = useState("");
 
   const textInput = useRef(null);
@@ -31,20 +31,20 @@ export default function MessageSection({
     <div className={container}>
       <Box mb={3}>
         <TextField
+          className={inputStyle}
           variant="outlined"
           defaultValue={newMessage}
           onBlur={(e) => setNewMessage(e.target.value)}
           onKeyPress={(e) => handleKeyPress({ event: e })}
           inputRef={textInput}
           label="Post a new message"
-          style={{ width: "100%" }}
         />
       </Box>
 
       <Box display="flex" sx={{ width: "100%" }}>
         <Button
           variant="contained"
-          style={{ marginLeft: "auto" }}
+          className={buttonStyle}
           onClick={() => {
             textInput.current.value = "";
             handlePostNewMessage(newMessage);

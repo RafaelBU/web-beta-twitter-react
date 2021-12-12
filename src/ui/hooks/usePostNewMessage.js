@@ -8,6 +8,7 @@ export default function usePostNewMessage({
   newMessage,
   currentTimeline,
   setCurrentTimeline,
+  setFullTimeline,
 }) {
   const [isPostingNewMessage, setIsPostingNewMessage] = useState(false);
 
@@ -21,8 +22,9 @@ export default function usePostNewMessage({
           meUser,
         });
         setCurrentTimeline(response);
+        setFullTimeline(response);
       } catch (error) {
-        setCurrentTimeline(currentTimeline);
+        console.error(error);
       } finally {
         setIsPostingNewMessage(false);
         setIsUpdatingTimeline(false);
